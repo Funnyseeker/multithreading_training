@@ -22,6 +22,9 @@
 .idea/
 *.iml
 
+#dict files
+maindict.txt
+
 #Target files
 target/
 
