@@ -23,7 +23,7 @@
 *.iml
 
 #dict files
-maindict.txt
+*.txt
 
 #Target files
 target/
