@@ -1,8 +1,6 @@
 package fun.trainings.mthrd.processing;
 
 import fun.trainings.mthrd.annotations.Log;
-import fun.trainings.mthrd.exceptions.MethdoNotSupportedException;
-import fun.trainings.mthrd.processing.accessors.Accessor;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -23,6 +21,10 @@ public class QueueManager {
 
     public List<Task> getCompleteList() {
         return completeList;
+    }
+
+    public Queue<Task> getTasksQueue() {
+        return tasksQueue;
     }
 
     /**
@@ -75,38 +77,5 @@ public class QueueManager {
             }
         }
         waitAll();
-    }
-
-    public class TaskQueueAccessor implements Accessor<Task> {
-        @Override
-        public Task get() {
-            synchronized (QueueManager.this.tasksQueue) {
-                Task task;
-                if ((task = QueueManager.this.tasksQueue.poll()) != null) {
-                    return task;
-                }
-            }
-            return null;
-        }
-
-        @Override
-        public void add(Task object) {
-            synchronized (QueueManager.this.tasksQueue) {
-                QueueManager.this.tasksQueue.add(object);
-            }
-        }
-    }
-
-    public class CompleteListAccessor implements Accessor<Task> {
-
-        @Override
-        public Task get() throws MethdoNotSupportedException {
-            throw new MethdoNotSupportedException(this.getClass().getName(), "get()");
-        }
-
-        @Override
-        public synchronized void add(Task object) {
-            QueueManager.this.completeList.add(object);
-        }
     }
 }

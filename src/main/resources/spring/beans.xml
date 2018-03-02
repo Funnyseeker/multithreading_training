@@ -8,9 +8,9 @@
 
     <bean id="infoListAccessor" class="fun.trainings.mthrd.processing.accessors.impl.InfoListSA"
           scope="singleton"/>
-    <bean id="completeListAccessor" class="fun.trainings.mthrd.processing.QueueManager$CompleteListAccessor"
+    <bean id="completeListAccessor" class="fun.trainings.mthrd.processing.accessors.impl.CompleteListAccessor"
           scope="singleton"/>
-    <bean id="taskQueueAccessor" class="fun.trainings.mthrd.processing.QueueManager$TaskQueueAccessor"
+    <bean id="taskQueueAccessor" class="fun.trainings.mthrd.processing.accessors.impl.TaskQueueAccessor"
           scope="singleton"/>
     <bean id="createWordInfoTaskFactory" class="fun.trainings.mthrd.processing.factories.impl.CreateWordInfoTaskFactory"
           scope="singleton">
@@ -20,5 +20,5 @@
           class="fun.trainings.mthrd.processing.factories.impl.SetAdditionalInfoTaskFactory" scope="singleton">
         <constructor-arg ref="infoListAccessor"/>
     </bean>
-    <bean id="queueManager" class="fun.trainings.mthrd.processing.QueueManager" lazy-init="true"/>
+    <bean id="queueManager" class="fun.trainings.mthrd.processing.QueueManager"/>
 </beans>

@@ -3,6 +3,8 @@ package fun.trainings.mthrd;
 import fun.trainings.mthrd.processing.ExecutationState;
 import fun.trainings.mthrd.processing.QueueManager;
 import fun.trainings.mthrd.processing.TaskExecutor;
+import fun.trainings.mthrd.processing.accessors.impl.CompleteListAccessor;
+import fun.trainings.mthrd.processing.accessors.impl.TaskQueueAccessor;
 import fun.trainings.mthrd.processing.factories.impl.CreateWordInfoTaskFactory;
 import fun.trainings.mthrd.processing.factories.impl.SetAdditionalInfoTaskFactory;
 import fun.trainings.mthrd.processing.impl.ParseFileTask;
@@ -21,10 +23,12 @@ public class DictUtilsLauncher {
     public static void init(ClassPathXmlApplicationContext ctx) {
         QueueManager queueManager = ctx.getBean("queueManager", QueueManager.class);
 
-        QueueManager.TaskQueueAccessor taskQueueAccessor
-                = ctx.getBean("taskQueueAccessor", QueueManager.TaskQueueAccessor.class);
-        QueueManager.CompleteListAccessor completeListAccessor
-                = ctx.getBean("completeListAccessor", QueueManager.CompleteListAccessor.class);
+        TaskQueueAccessor taskQueueAccessor
+                = ctx.getBean("taskQueueAccessor", TaskQueueAccessor.class);
+        taskQueueAccessor.setTasksQueue(queueManager.getTasksQueue());
+        CompleteListAccessor completeListAccessor
+                = ctx.getBean("completeListAccessor", CompleteListAccessor.class);
+        completeListAccessor.setCompleteList(queueManager.getCompleteList());
 
         ParseFileTask parseMaindDictTask
                 = ctx.getBean("parseFileTask", ParseFileTask.class);
