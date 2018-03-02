@@ -2,4 +2,23 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
    http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+
+    <bean id="parseFileTask" class="fun.trainings.mthrd.processing.impl.ParseFileTask" scope="prototype"/>
+    <bean id="logingPostProcessor" class="fun.trainings.mthrd.spring.LoggingBeanPostProcessor"/>
+
+    <bean id="infoListAccessor" class="fun.trainings.mthrd.processing.accessors.impl.InfoListSA"
+          scope="singleton"/>
+    <bean id="completeListAccessor" class="fun.trainings.mthrd.processing.QueueManager$CompleteListAccessor"
+          scope="singleton"/>
+    <bean id="taskQueueAccessor" class="fun.trainings.mthrd.processing.QueueManager$TaskQueueAccessor"
+          scope="singleton"/>
+    <bean id="createWordInfoTaskFactory" class="fun.trainings.mthrd.processing.factories.impl.CreateWordInfoTaskFactory"
+          scope="singleton">
+        <constructor-arg ref="infoListAccessor"/>
+    </bean>
+    <bean id="setAdditioanlInfoTaskFactory"
+          class="fun.trainings.mthrd.processing.factories.impl.SetAdditionalInfoTaskFactory" scope="singleton">
+        <constructor-arg ref="infoListAccessor"/>
+    </bean>
+    <bean id="queueManager" class="fun.trainings.mthrd.processing.QueueManager" lazy-init="true"/>
 </beans>

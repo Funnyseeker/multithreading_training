@@ -2,12 +2,15 @@ package fun.trainings.mthrd.model.impl;
 
 import fun.trainings.mthrd.model.Info;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class WordInfo implements Info {
 
     private String word;
-    private String morphInfo;
-    private Long frequency;
-    private String additionalInfo;
+    private List<String> morphInfoList = new ArrayList<>();
+    private List<Long> frequencyList = new ArrayList<>();
+    private List<String> additionalInfoList = new ArrayList<>();
 
     public String getWord() {
         return word;
@@ -17,27 +20,39 @@ public class WordInfo implements Info {
         this.word = word;
     }
 
-    public String getMorphInfo() {
-        return morphInfo;
+    public List<String> getMorphInfoList() {
+        return morphInfoList;
     }
 
-    public void setMorphInfo(String morphInfo) {
-        this.morphInfo = morphInfo;
+    public void setMorphInfoList(List<String> morphInfoList) {
+        this.morphInfoList = morphInfoList;
     }
 
-    public Long getFrequency() {
-        return frequency;
+    public List<Long> getFrequencyList() {
+        return frequencyList;
     }
 
-    public void setFrequency(Long frequency) {
-        this.frequency = frequency;
+    public void setFrequencyList(List<Long> frequencyList) {
+        this.frequencyList = frequencyList;
     }
 
-    public String getAdditionalInfo() {
-        return additionalInfo;
+    public List<String> getAdditionalInfoList() {
+        return additionalInfoList;
     }
 
-    public void setAdditionalInfo(String additionalInfo) {
-        this.additionalInfo = additionalInfo;
+    public void setAdditionalInfoList(List<String> additionalInfoList) {
+        this.additionalInfoList = additionalInfoList;
+    }
+
+    public synchronized void addMorphInfo(String morphInfo) {
+        morphInfoList.add(morphInfo);
+    }
+
+    public synchronized void addFrequency(Long frequency) {
+        frequencyList.add(frequency);
+    }
+
+    public synchronized void addAdditionalInfo(String additionalInfo) {
+        additionalInfoList.add(additionalInfo);
     }
 }

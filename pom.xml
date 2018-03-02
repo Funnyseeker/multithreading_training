@@ -7,6 +7,7 @@
     <properties>
         <activemq.version>5.7.0</activemq.version>
         <spring.version>5.0.0.RELEASE</spring.version>
+        <sl4j.version>1.7.25</sl4j.version>
     </properties>
 
     <groupId>fun.trainings.mthrd</groupId>
@@ -35,6 +36,11 @@
             <groupId>org.springframework</groupId>
             <artifactId>spring-context</artifactId>
             <version>${spring.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-simple</artifactId>
+            <version>${sl4j.version}</version>
         </dependency>
     </dependencies>
 

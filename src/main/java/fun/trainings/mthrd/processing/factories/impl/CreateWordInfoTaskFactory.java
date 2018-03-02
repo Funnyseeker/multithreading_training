@@ -1,20 +1,17 @@
 package fun.trainings.mthrd.processing.factories.impl;
 
-import fun.trainings.mthrd.processing.Accessor;
-import fun.trainings.mthrd.processing.factories.TaskFactory;
+import fun.trainings.mthrd.model.impl.WordInfo;
+import fun.trainings.mthrd.processing.accessors.SearcherAndAccessor;
 import fun.trainings.mthrd.processing.impl.CreateWordInfoTask;
 
-public class CreateWordInfoTaskFactory implements TaskFactory<CreateWordInfoTask> {
+public class CreateWordInfoTaskFactory extends AbstractWordInfoTaskFactory<CreateWordInfoTask> {
 
-    Accessor infoListAccessor;
-
-    CreateWordInfoTaskFactory(Accessor infoListAccessor){
-        this.infoListAccessor = infoListAccessor;
+    CreateWordInfoTaskFactory(SearcherAndAccessor<WordInfo> accessor) {
+        super(accessor);
     }
 
     @Override
-    public CreateWordInfoTask createNew(Object... params) {
-        String input = (String)params[0];
+    protected CreateWordInfoTask createTask(String input) {
         return new CreateWordInfoTask(input, infoListAccessor);
     }
 }

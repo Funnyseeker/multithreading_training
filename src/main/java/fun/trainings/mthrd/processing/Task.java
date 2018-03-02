@@ -1,6 +1,9 @@
 package fun.trainings.mthrd.processing;
 
 public interface Task {
-    void execute();
-    TaskType getType();
+    int MAX_RETRIES = 3;
+
+    ExecutationState execute();
+
+    ExecutationState getState();
 }

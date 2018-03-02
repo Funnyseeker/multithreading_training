@@ -1,35 +1,47 @@
 package fun.trainings.mthrd.processing.impl;
 
+import fun.trainings.mthrd.exceptions.MethdoNotSupportedException;
 import fun.trainings.mthrd.model.impl.WordInfo;
-import fun.trainings.mthrd.processing.Accessor;
-import fun.trainings.mthrd.processing.Task;
-import fun.trainings.mthrd.processing.TaskType;
+import fun.trainings.mthrd.processing.ExecutationState;
+import fun.trainings.mthrd.processing.accessors.SearcherAndAccessor;
 
 import java.util.StringTokenizer;
 
-public class CreateWordInfoTask implements Task {
+public class CreateWordInfoTask extends AbstractTask {
     String input;
+    SearcherAndAccessor<WordInfo> infoListAccessor;
 
-    Accessor<WordInfo> accessor;
-
-    public CreateWordInfoTask(String input, Accessor<WordInfo> accessor) {
+    public CreateWordInfoTask(String input, SearcherAndAccessor<WordInfo> infoListAccessor) {
         this.input = input;
-        this.accessor = accessor;
+        this.infoListAccessor = infoListAccessor;
     }
 
 
     @Override
-    public void execute() {
+    public ExecutationState execute() {
         StringTokenizer tokenizer = new StringTokenizer(input, "|");
-        WordInfo info = new WordInfo();
-        info.setWord(tokenizer.nextToken());
-        info.setMorphInfo(tokenizer.nextToken());
-        info.setFrequency(Long.parseLong(tokenizer.nextToken()));
-        accessor.add(info);
+        String word = tokenizer.nextToken().trim();
+        WordInfo info = null;
+        boolean needCreate = true;
+        try {
+            info = infoListAccessor.find(word);
+            needCreate = (info == null);
+        } catch (MethdoNotSupportedException e) {
+            e.printStackTrace();
+            return returnState(ExecutationState.FAIL);
+        }
+        if (needCreate) {
+            info = new WordInfo();
+            info.setWord(word);
+            infoListAccessor.add(info);
+        }
+        info.addMorphInfo(tokenizer.nextToken().trim());
+        info.addFrequency(Long.parseLong(tokenizer.nextToken().trim()));
+        return returnState(ExecutationState.COMPLETE);
     }
 
     @Override
-    public TaskType getType() {
-        return TaskType.CreateWordInfo;
+    public String toString() {
+        return this.getClass().getName();
     }
 }
