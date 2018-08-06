@@ -11,7 +11,7 @@
     </properties>
 
     <groupId>fun.trainings.mthrd</groupId>
-    <artifactId>multithreading-trainings</artifactId>
+    <artifactId>multithreading</artifactId>
     <version>1.0.0</version>
     <build>
         <plugins>
